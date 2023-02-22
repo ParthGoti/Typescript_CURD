@@ -39,26 +39,38 @@ const getRole = async (req: Request, res: Response) => {
 };
 
 const updateRole = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { description, name } = req.body;
+  const { id, description, name } = req.body;
 
-  const role = await Role.findOne({ _id: id });
-
-  if (!role) {
-    return res.status(404).json({ message: `Role with id "${id}" not found.` });
+  if (!id) {
+    return res.status(422).json({
+      message: "id is required!!",
+    });
   }
 
-  if (!name || !description) {
-    return res
-      .status(422)
-      .json({ message: "The fields name and description are required" });
+  const updateData: Partial<RoleInput> = {};
+
+  if (name !== undefined) {
+    updateData.name = name;
   }
 
-  await Role.updateOne({ _id: id }, { name, description });
+  if (description !== undefined) {
+    updateData.description = description;
+  }
 
-  const roleUpdated = await Role.findById(id, { name, description });
+  const updatedRole = await Role.findOneAndUpdate({ _id: id }, updateData, {
+    new: true,
+  });
 
-  return res.status(200).json({ data: roleUpdated });
+  if (!updatedRole) {
+    return res.status(404).json({
+      message: "Role not found",
+    });
+  }
+
+  return res.status(200).json({
+    message: "Role updated successfully!!",
+    roleUpdated: updatedRole,
+  });
 };
 
 const deleteRole = async (req: Request, res: Response) => {

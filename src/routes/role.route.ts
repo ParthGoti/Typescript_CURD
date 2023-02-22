@@ -11,10 +11,10 @@ const roleRoute = () => {
   const router = Router();
 
   router.post("/createrole", createRole);
-  router.get("/roles", getAllRoles);
-  router.get("/roles/:id", getRole);
-  router.put("/roles/:id", updateRole);
-  router.delete("/roles/:id", deleteRole);
+  router.get("/getroles", getAllRoles);
+  router.get("/role/:id", getRole);
+  router.put("/updaterole", updateRole);
+  router.delete("/deleterole/:id", deleteRole);
 
   return router;
 };

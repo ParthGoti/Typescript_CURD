@@ -15,7 +15,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use('/roles', roleRoute());
+app.use('/role', roleRoute());
 app.use('/user', userRoute());
 
 app.get('/', (req, res) => {

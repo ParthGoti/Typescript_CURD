@@ -48,6 +48,6 @@ const usersSchema = new Schema(
   },
 );
 
-const User: Model<UserDocument> = mongoose.model<UserDocument>('User', usersSchema);
+const User = mongoose.model<UserDocument>('User', usersSchema);
 
 export { User, UserInput, UserDocument };
